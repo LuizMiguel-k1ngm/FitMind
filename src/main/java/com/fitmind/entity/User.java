@@ -15,19 +15,21 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; 
 	
-	
 	private String name;
 	private Integer age;
 	private String email;
+	
 	public User() {};
 	
 	public User(Integer id, String name, Integer age, String email) {
-		super();
+		
+		
 		this.id = id;
 		this.name = name;
 		this.age = age;
 		this.email = email;
 	}
+
 
 	public Integer getId() {
 		return id;

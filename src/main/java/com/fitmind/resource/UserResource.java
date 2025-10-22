@@ -13,7 +13,7 @@ import com.fitmind.entity.User;
 import com.fitmind.service.UserService;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/api/v1/users")
 public class UserResource {
 	private UserService servico;
 
@@ -25,20 +25,27 @@ public class UserResource {
 		User u = servico.findById(id);
 		return ResponseEntity.ok().body(u);
 	}
+	
+	
+	
 	@PostMapping(value = "/create")
 	public ResponseEntity<User> add(@RequestBody User u){
-		System.out.println(u);
+
 		User newUser = servico.add(u);
+		
 		return ResponseEntity.ok().body(newUser);
+		
+		
 	}
 	
 	@DeleteMapping(value = "/{id}/delete")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
+		
 		servico.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
-	
+
 	
 	
 	

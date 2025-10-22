@@ -2,52 +2,51 @@ package com.fitmind.service;
 
 
 import org.springframework.stereotype.Service;
-import com.fitmind.FitMindAiApplication;
+
 import com.fitmind.entity.User;
+import com.fitmind.repository.HealthProfileRepository;
 import com.fitmind.repository.UserRepository;
 
 @Service
 public class UserService {
 
-    private final FitMindAiApplication fitMindAiApplication;
 	
-	private UserRepository repository;
+	private UserRepository userRepository;
+	private HealthProfileRepository profileRepository;
+	private HealthProfileService profileService;
 
-	public UserService(UserRepository repository, FitMindAiApplication fitMindAiApplication) {
+	public UserService(UserRepository userRepository, HealthProfileRepository profileRepository, HealthProfileService profileService) {
 		
-		this.repository = repository;
+		this.userRepository = userRepository;
+		this.profileRepository = profileRepository;
+		this.profileService = profileService;
 		
-		this.fitMindAiApplication = fitMindAiApplication;
+		
 	}
 	
 	public User add (User u){
-	return repository.save(u);
+	return userRepository.save(u);
+	
 		
 	}
 	
 	public void delete(Integer id) {
-		repository.deleteById(id);
+		
+		Integer profileId = profileService.findUserById(id);
+		
+		// DELETAR PROFILE
+		profileRepository.deleteById(id);
+		
+		// DELETAR USER
+		userRepository.deleteById(id);
+		
 	}
 	
 	public User findById(Integer id) {
-		return repository.findById(id).get();
+		return userRepository.findById(id).get();
 	}
 	
-	public User updateUser(Integer id, User u){
-		User oldUser = findById(id);
-		User newUser = new User();
-		newUser.setId(oldUser.getId());
-		newUser.setAge(u.getAge());;
-		newUser.setEmail(u.getEmail());
-		newUser.setName(u.getName());
-		add(newUser);
-		delete(oldUser.getId());
-		return newUser;
-		
-		
-		
-		
-	}
+
 	
 	
 

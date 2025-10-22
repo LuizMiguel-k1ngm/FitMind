@@ -1,7 +1,7 @@
 package com.fitmind.entity;
 
 import java.util.Objects;
-import jakarta.annotation.Generated;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,7 +17,7 @@ public class HealthProfile {
 	
 	private Integer id;
 	
-//	private User user;
+	private Integer userId;
 	
 	private Integer weight;
 	
@@ -46,11 +46,11 @@ public class HealthProfile {
 	}
 	
 
-	public HealthProfile(Integer id, Integer weight, Integer height, Integer exercise,
+	public HealthProfile(Integer id, Integer userId,Integer weight, Integer height, Integer exercise,
 			Integer workingStanding, Integer workoutFrequency, Integer heartIssue, Integer jointIssue,
 			Integer bonesIssue, Integer breathIssue, Integer drink, Integer smoke) {
 		this.id = id;
-		//this.user = user;
+		this.userId = userId;
 		this.weight = weight;
 		this.height = height;
 		this.exercise = exercise;
@@ -75,14 +75,14 @@ public class HealthProfile {
 	}
 
 
-	/*public User getUser() {
-		return user;
+	public Integer getUserId() {
+		return userId;
 	}
 
 
-	public void setUser(User user) {
-		this.user = user;
-	}*/
+	public void setUser(Integer userId) {
+		this.userId = userId;
+	}
 
 
 	public Integer getWeight() {
