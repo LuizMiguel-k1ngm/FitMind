@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.fitmind.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
 	
 	
 	

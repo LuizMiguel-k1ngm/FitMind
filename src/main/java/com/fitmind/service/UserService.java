@@ -30,9 +30,9 @@ public class UserService {
 		
 	}
 	
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		
-		Integer profileId = profileService.findUserById(id);
+		Long profileId = profileService.findUserById(id);
 		
 		// DELETAR PROFILE
 		profileRepository.deleteById(id);
@@ -42,7 +42,7 @@ public class UserService {
 		
 	}
 	
-	public User findById(Integer id) {
+	public User findById(Long id) {
 		return userRepository.findById(id).get();
 	}
 	

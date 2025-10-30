@@ -13,29 +13,39 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id; 
+	private Long id; 
 	
 	private String name;
 	private Integer age;
 	private String email;
+	private Integer gender;
 	
 	public User() {};
 	
-	public User(Integer id, String name, Integer age, String email) {
+	public User(Long id, String name, Integer age, String email, Integer gender) {
 		
 		
 		this.id = id;
 		this.name = name;
 		this.age = age;
 		this.email = email;
+		this.gender = gender;
 	}
 
 
-	public Integer getId() {
+	public Integer getGender() {
+		return gender;
+	}
+
+	public void setGender(Integer gender) {
+		this.gender = gender;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -82,7 +92,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", age=" + age + ", email=" + email + "]";
+		return "User [id=" + id + ", name=" + name + ", gender =" + gender +", age=" + age + ", email=" + email + "]";
 	}
 	
 	

@@ -12,43 +12,33 @@ import jakarta.persistence.Table;
 @Entity
 
 public class HealthProfile {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private Long userId;
 	
-	private Integer id;
-	
-	private Integer userId;
-	
-	private Integer weight;
-	
-	private Integer height;
-	
-	private Integer exercise;
-	
-	private Integer workingStanding;
-	
-	private Integer workoutFrequency;
-	
-	private Integer heartIssue;
-	
-	private Integer jointIssue;
-	
-	private Integer bonesIssue;
-	
-	private Integer breathIssue;
-	
-	private Integer drink;
-	
-	private Integer smoke;
+	private Double weight;
+	private Double height;
+	private Double exercise;
+	private Double workingStanding;
+	private Double workoutFrequency;
+	private Double heartIssue;
+	private Double jointIssue;
+	private Double bonesIssue;
+	private Double breathIssue;
+	private Double drink;
+	private Double smoke;
 
 	public HealthProfile() {
 		
 	}
 	
 
-	public HealthProfile(Integer id, Integer userId,Integer weight, Integer height, Integer exercise,
-			Integer workingStanding, Integer workoutFrequency, Integer heartIssue, Integer jointIssue,
-			Integer bonesIssue, Integer breathIssue, Integer drink, Integer smoke) {
+	public HealthProfile(Long id, Long userId, Double weight, Double height, Double exercise,
+			Double workingStanding, Double workoutFrequency, Double heartIssue, Double jointIssue,
+			Double bonesIssue, Double breathIssue, Double drink, Double smoke) {
 		this.id = id;
 		this.userId = userId;
 		this.weight = weight;
@@ -65,145 +55,145 @@ public class HealthProfile {
 	}
 
 
-	public Integer getId() {
+
+
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
 
-	public void setUser(Integer userId) {
+	public void setUser(Long userId) {
 		this.userId = userId;
 	}
+	
+	
 
 
-	public Integer getWeight() {
+
+	public Double getWeight() {
 		return weight;
 	}
 
 
-	public void setWeight(Integer weight) {
+	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
 
 
-	public Integer getHeight() {
+	public Double getHeight() {
 		return height;
 	}
 
 
-	public void setHeight(Integer height) {
+	public void setHeight(Double height) {
 		this.height = height;
 	}
 
 
-	public Integer getExercise() {
+	public Double getExercise() {
 		return exercise;
 	}
 
 
-	public void setExercise(Integer exercise) {
+	public void setExercise(Double exercise) {
 		this.exercise = exercise;
 	}
 
 
-	public Integer getWorkingStanding() {
+	public Double getWorkingStanding() {
 		return workingStanding;
 	}
 
 
-	public void setWorkingStanding(Integer workingStanding) {
+	public void setWorkingStanding(Double workingStanding) {
 		this.workingStanding = workingStanding;
 	}
 
 
-	public Integer getWorkoutFrequency() {
+	public Double getWorkoutFrequency() {
 		return workoutFrequency;
 	}
 
 
-	public void setWorkoutFrequency(Integer workoutFrequency) {
+	public void setWorkoutFrequency(Double workoutFrequency) {
 		this.workoutFrequency = workoutFrequency;
 	}
 
 
-	public Integer getHeartIssue() {
+	public Double getHeartIssue() {
 		return heartIssue;
 	}
 
 
-	public void setHeartIssue(Integer heartIssue) {
+	public void setHeartIssue(Double heartIssue) {
 		this.heartIssue = heartIssue;
 	}
 
 
-	public Integer getJointIssue() {
+	public Double getJointIssue() {
 		return jointIssue;
 	}
 
 
-	public void setJointIssue(Integer jointIssue) {
+	public void setJointIssue(Double jointIssue) {
 		this.jointIssue = jointIssue;
 	}
 
 
-	public Integer getBonesIssue() {
+	public Double getBonesIssue() {
 		return bonesIssue;
 	}
 
 
-	public void setBonesIssue(Integer bonesIssue) {
+	public void setBonesIssue(Double bonesIssue) {
 		this.bonesIssue = bonesIssue;
 	}
 
 
-	public Integer getBreathIssue() {
+	public Double getBreathIssue() {
 		return breathIssue;
 	}
 
 
-	public void setBreathIssue(Integer breathIssue) {
+	public void setBreathIssue(Double breathIssue) {
 		this.breathIssue = breathIssue;
 	}
 
 
-	public Integer getDrink() {
+	public Double getDrink() {
 		return drink;
 	}
 
 
-	public void setDrink(Integer drink) {
+	public void setDrink(Double drink) {
 		this.drink = drink;
 	}
 
 
-	public Integer getSmoke() {
+	public Double getSmoke() {
 		return smoke;
 	}
 
 
-	public void setSmoke(Integer smoke) {
+	public void setSmoke(Double smoke) {
 		this.smoke = smoke;
 	}
-
-	
-	
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
 	
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -216,15 +206,7 @@ public class HealthProfile {
 		return Objects.equals(id, other.id);
 	}
 	
-	@Override
-	public String toString() {
-		return "HealthProfile [id=" + id + ", user=" +  ", weight=" + weight + ", height=" + height
-				+ ", exercise=" + exercise + ", workingStanding=" + workingStanding + ", workoutFrequency="
-				+ workoutFrequency + ", heartIssue=" + heartIssue + ", jointIssue=" + jointIssue + ", bonesIssue="
-				+ bonesIssue + ", breathIssue=" + breathIssue + ", drink=" + drink + ", smoke=" + smoke + "]";
-	}
-	
-	
+
 	
 	
 	

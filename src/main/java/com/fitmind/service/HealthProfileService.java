@@ -1,9 +1,7 @@
 package com.fitmind.service;
-import com.fitmind.resource.HealthProfileResource;
 import org.springframework.stereotype.Service;
 
 import com.fitmind.entity.HealthProfile;
-import com.fitmind.entity.User;
 import com.fitmind.repository.HealthProfileRepository;
 import com.fitmind.repository.UserRepository;
 
@@ -19,15 +17,16 @@ public class HealthProfileService {
 		this.userRepository = userRepository;
 	}
 	
+	
 	public HealthProfile add(HealthProfile u) {
 		return profileRepository.save(u);	
 	}
 	
-	public HealthProfile findById(Integer id) {
+	public HealthProfile findById(Long id) {
 		return profileRepository.findById(id).get();	
 	}
 			
-	public Integer findUserById (Integer id) {
+	public Long findUserById (Long id) {
 		
 		HealthProfile p = profileRepository.findByUserId(id);
 		
@@ -35,16 +34,9 @@ public class HealthProfileService {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 
 	// Lesao muscular
-	public Boolean hasMuscularInjury(Integer id) {
+	public Boolean hasMuscularInjury(Long id) {
 		
 		HealthProfile p = findById(id);
 		
@@ -61,42 +53,19 @@ public class HealthProfileService {
 	}
 	
 	
-  public Integer getBMI (Integer id ){
+	//BMI
+	
+  public Double getBMI (Long id ){
 	  
 	  //bmi = weight / height* height
 	  HealthProfile p = findById(id);
-	  Integer height = p.getHeight() / 100;
+	  Double height = p.getHeight() * 100;
 	  
-	  Integer bmi = p.getWeight()/ height * height ; 
-	  return bmi;
-	    
+	  Double bmi = p.getWeight()/ height * height ; 
+	  return bmi;	    
   }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
+  
+  
 	// atrofia
 	public Boolean hasAtrofiaInjury() {
 		
@@ -105,7 +74,7 @@ public class HealthProfileService {
 		return true;
 	}
 	
-	public Boolean fatUser(Integer id) {
+	public Boolean fatUser(Long id) {
 		
 		HealthProfile p = findById(id);
 		
@@ -117,7 +86,7 @@ public class HealthProfileService {
 		return false;
 	}
 	
-	public Boolean userTall(Integer id) {
+	public Boolean userTall(Long id) {
 		
 		HealthProfile p = findById(id);
 		
