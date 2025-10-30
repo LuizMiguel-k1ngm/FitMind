@@ -26,7 +26,7 @@ public class HealthProfileResource {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<HealthProfile> findbyId(@PathVariable Integer id){
+	public ResponseEntity<HealthProfile> findbyId(@PathVariable Long id){
 		HealthProfile p  = servico.findById(id);
 		return ResponseEntity.ok().body(p);
 		
@@ -42,12 +42,14 @@ public class HealthProfileResource {
 	}
 	
 	@GetMapping(value = "/{id}/bmi")
-	public ResponseEntity<Integer> getBMI(@PathVariable Integer id){
+	public ResponseEntity<Double> getBMI(@PathVariable Long id){
 		
-		Integer bmi = servico.getBMI(id);
+		Double bmi = servico.getBMI(id);
 
 		return ResponseEntity.ok().body(bmi);
 	}
+	
+	
 	
 	
 }

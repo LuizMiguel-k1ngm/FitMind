@@ -21,7 +21,7 @@ public class UserResource {
 		this.servico = servico;
 	}
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<User> findbyId(@PathVariable Integer id){
+	public ResponseEntity<User> findbyId(@PathVariable Long id){
 		User u = servico.findById(id);
 		return ResponseEntity.ok().body(u);
 	}
@@ -39,7 +39,7 @@ public class UserResource {
 	}
 	
 	@DeleteMapping(value = "/{id}/delete")
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+	public ResponseEntity<Void> delete(@PathVariable Long id){
 		
 		servico.delete(id);
 		return ResponseEntity.noContent().build();
