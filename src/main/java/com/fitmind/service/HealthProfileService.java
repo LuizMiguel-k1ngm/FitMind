@@ -2,6 +2,7 @@ package com.fitmind.service;
 import org.springframework.stereotype.Service;
 
 import com.fitmind.entity.HealthProfile;
+import com.fitmind.entity.User;
 import com.fitmind.repository.HealthProfileRepository;
 import com.fitmind.repository.UserRepository;
 
@@ -25,6 +26,8 @@ public class HealthProfileService {
 	public HealthProfile findById(Long id) {
 		return profileRepository.findById(id).get();	
 	}
+	
+	
 			
 	public Long findUserById (Long id) {
 		
@@ -33,6 +36,8 @@ public class HealthProfileService {
 		return p.getUserId();		
 		
 	}
+	
+	
 	
 
 	// Lesao muscular
@@ -59,12 +64,27 @@ public class HealthProfileService {
 	  
 	  //bmi = weight / height* height
 	  HealthProfile p = findById(id);
-	  Double height = p.getHeight() * 100;
+	  Double squareHeight = p.getHeight() * p.getHeight();
 	  
-	  Double bmi = p.getWeight()/ height * height ; 
+	  Double bmi = p.getWeight() / squareHeight ; 
 	  return bmi;	    
   }
   
+  //BMR - basal metabolic rate
+  
+  public Double getBMR(Long id) {
+	  HealthProfile p = findById(id);
+	  Long userId = findUserById(id);
+	  User u = userRepository.findById(userId).get();
+	  Integer gender = u.getGender();
+	  Double weightToCm = p.getHeight()*100;
+	  	  
+	  
+	  Double variableForGender = gender == 1 ? (10 * weightToCm) + (6.25 * weightToCm ) -  (5* u.getAge()) + 5 : (10 * weightToCm) + (6.25 * weightToCm ) -  (5* u.getAge())-161;
+	  return variableForGender;
+	  
+  }
+    
   
 	// atrofia
 	public Boolean hasAtrofiaInjury() {
@@ -77,6 +97,7 @@ public class HealthProfileService {
 	public Boolean fatUser(Long id) {
 		
 		HealthProfile p = findById(id);
+		
 		
 		Integer FAT_LIMIT = 100;
 		

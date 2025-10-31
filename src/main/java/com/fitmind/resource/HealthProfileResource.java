@@ -49,7 +49,6 @@ public class HealthProfileResource {
 		return ResponseEntity.ok().body(bmi);
 	}
 	
-	
-	
+
 	
 }
