@@ -9,7 +9,7 @@ import com.fitmind.repository.UserRepository;
 @Service
 public class HealthProfileService {
 	
-	private static final Integer CALORIE_TRESHOLD = 500;
+	private static final Double CALORIE_TRESHOLD = 500.;
 	
 
 	
@@ -44,7 +44,7 @@ public class HealthProfileService {
 	
 
 	// Lesao muscular
-	public Boolean hasMuscularInjury(Long id) {
+	public Boolean gethasMuscularInjury(Long id) {
 		
 		HealthProfile p = findById(id);
 		
@@ -89,7 +89,7 @@ public class HealthProfileService {
   }
   
   
-  public Double totalCaloricExpenditure (Long id){
+  public Double getTotalCaloricExpenditure (Long id){
 	  // niveis : sedantário: fator 1.2; levemente ativo 1.55
 	  // muito ativo: 1.725; extremantente ativo 1.90;
 	 // variableForGender * nivel
@@ -115,13 +115,13 @@ public class HealthProfileService {
   
   //caloric goal
   
-  public Double caloricGoal (Long id) {
+  public Double getCaloricGoal (Long id) {
 	  //- manter = tce
 	  //- perder = tce - 500
 	  //- ganhar massa = tce + 500
 	  
 	  HealthProfile p = findById(id);  
-	  Double tce = totalCaloricExpenditure(id);
+	  Double tce = getTotalCaloricExpenditure(id);
 	  Integer goal = p.getGoal();
 	  
 	  switch(goal) {
@@ -133,7 +133,10 @@ public class HealthProfileService {
 	  case 2 :
 		  return tce + CALORIE_TRESHOLD;  
 	
-	  }	  	  
+	   default:
+			return 0.0;
+	  }
+	  	  
   }
     
   
@@ -141,7 +144,7 @@ public class HealthProfileService {
   
   
 	// atrofia
-	public Boolean hasAtrofiaInjury() {
+	public Boolean gatHasAtrofiaInjury() {
 		
 		// O que tem que ser True do perfil, para ser AtrofiaInjury
 		
@@ -161,7 +164,7 @@ public class HealthProfileService {
 		return false;
 	}
 	
-	public Boolean userTall(Long id) {
+	public Boolean getUserTall(Long id) {
 		
 		HealthProfile p = findById(id);
 		

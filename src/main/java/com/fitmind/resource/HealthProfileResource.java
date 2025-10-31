@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fitmind.entity.HealthProfile;
+import com.fitmind.entity.dto.Information;
 import com.fitmind.repository.HealthProfileRepository;
 import com.fitmind.service.HealthProfileService;
 
@@ -48,6 +49,26 @@ public class HealthProfileResource {
 
 		return ResponseEntity.ok().body(bmi);
 	}
+	
+	
+	@GetMapping(value = "/{id}/information")
+	public ResponseEntity<Information> getInformation(@PathVariable Long id){
+		
+		Double caloricGoal = servico.getCaloricGoal(id);
+		Double totalCaloricExpenditure = servico.getTotalCaloricExpenditure(id);
+		Double getBMR = servico.getBMR(id);
+		Double getBMI = servico.getBMI(id);
+		Boolean hasMuscularInjury = servico.gethasMuscularInjury(id);
+		Boolean hasAtrofiaInjury = servico.gethasMuscularInjury(id);
+		Boolean userTall = servico.getUserTall(id);
+		
+		Information i = new Information(caloricGoal, totalCaloricExpenditure, getBMR, getBMI, hasMuscularInjury, hasAtrofiaInjury, userTall);
+		
+		return ResponseEntity.ok().body(i);
+		
+	}
+	
+	
 	
 	
 	
