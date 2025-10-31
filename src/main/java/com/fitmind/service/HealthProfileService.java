@@ -8,6 +8,9 @@ import com.fitmind.repository.UserRepository;
 
 @Service
 public class HealthProfileService {
+	
+	private static final Integer CALORIE_TRESHOLD = 500;
+	
 
 	
 	private HealthProfileRepository profileRepository;
@@ -86,7 +89,7 @@ public class HealthProfileService {
   }
   
   
-  public Double  totalCaloricExpenditure (Long id){
+  public Double totalCaloricExpenditure (Long id){
 	  // niveis : sedantário: fator 1.2; levemente ativo 1.55
 	  // muito ativo: 1.725; extremantente ativo 1.90;
 	 // variableForGender * nivel
@@ -106,23 +109,32 @@ public class HealthProfileService {
 	  }
 	  
 	  return bmr * activityFactor;
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	
-	  
+	 	  	  
   }
   
   
+  //caloric goal
+  
+  public Double caloricGoal (Long id) {
+	  //- manter = tce
+	  //- perder = tce - 500
+	  //- ganhar massa = tce + 500
+	  
+	  HealthProfile p = findById(id);  
+	  Double tce = totalCaloricExpenditure(id);
+	  Integer goal = p.getGoal();
+	  
+	  switch(goal) {
+	  
+	  case 0 :
+		  return tce;
+	  case 1 :
+		  return tce - CALORIE_TRESHOLD;
+	  case 2 :
+		  return tce + CALORIE_TRESHOLD;  
+	
+	  }	  	  
+  }
     
   
   

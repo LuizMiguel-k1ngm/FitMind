@@ -22,14 +22,15 @@ public class HealthProfile {
 	private Double weight;
 	private Double height;
 	private Double exercise;
+	private Integer goal;
 	private Double workingStanding;
 	private Double workoutFrequency;
-	private Double heartIssue;
-	private Double jointIssue;
-	private Double bonesIssue;
-	private Double breathIssue;
-	private Double drink;
-	private Double smoke;
+	private Integer heartIssue;
+	private Integer jointIssue;
+	private Integer bonesIssue;
+	private Integer breathIssue;
+	private Integer drink;
+	private Integer smoke;
 
 	public HealthProfile() {
 		
@@ -37,12 +38,14 @@ public class HealthProfile {
 	
 
 	public HealthProfile(Long id, Long userId, Double weight, Double height, Double exercise,
-			Double workingStanding, Double workoutFrequency, Double heartIssue, Double jointIssue,
-			Double bonesIssue, Double breathIssue, Double drink, Double smoke) {
+			Integer goal, Double workingStanding, Double workoutFrequency, Integer heartIssue,
+			Integer jointIssue, Integer bonesIssue, Integer breathIssue,
+			Integer drink, Integer smoke) {
 		this.id = id;
 		this.userId = userId;
 		this.weight = weight;
 		this.height = height;
+		this.goal = goal;
 		this.exercise = exercise;
 		this.workingStanding = workingStanding;
 		this.workoutFrequency = workoutFrequency;
@@ -55,6 +58,14 @@ public class HealthProfile {
 	}
 
 
+	public Integer getGoal() {
+		return goal;
+	}
+
+
+	public void setGoal(Integer goal) {
+		this.goal = goal;
+	}
 
 
 	public Long getId() {
@@ -130,62 +141,62 @@ public class HealthProfile {
 	}
 
 
-	public Double getHeartIssue() {
+	public Integer getHeartIssue() {
 		return heartIssue;
 	}
 
 
-	public void setHeartIssue(Double heartIssue) {
+	public void setHeartIssue(Integer heartIssue) {
 		this.heartIssue = heartIssue;
 	}
 
 
-	public Double getJointIssue() {
+	public Integer getJointIssue() {
 		return jointIssue;
 	}
 
 
-	public void setJointIssue(Double jointIssue) {
+	public void setJointIssue(Integer jointIssue) {
 		this.jointIssue = jointIssue;
 	}
 
 
-	public Double getBonesIssue() {
+	public Integer getBonesIssue() {
 		return bonesIssue;
 	}
 
 
-	public void setBonesIssue(Double bonesIssue) {
+	public void setBonesIssue(Integer bonesIssue) {
 		this.bonesIssue = bonesIssue;
 	}
 
 
-	public Double getBreathIssue() {
+	public Integer getBreathIssue() {
 		return breathIssue;
 	}
 
 
-	public void setBreathIssue(Double breathIssue) {
+	public void setBreathIssue(Integer breathIssue) {
 		this.breathIssue = breathIssue;
 	}
 
 
-	public Double getDrink() {
+	public Integer getDrink() {
 		return drink;
 	}
 
 
-	public void setDrink(Double drink) {
+	public void setDrink(Integer drink) {
 		this.drink = drink;
 	}
 
 
-	public Double getSmoke() {
+	public Integer getSmoke() {
 		return smoke;
 	}
 
 
-	public void setSmoke(Double smoke) {
+	public void setSmoke(Integer smoke) {
 		this.smoke = smoke;
 	}
 
