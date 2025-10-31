@@ -84,7 +84,49 @@ public class HealthProfileService {
 	  return variableForGender;
 	  
   }
+  
+  
+  public Double  totalCaloricExpenditure (Long id){
+	  // niveis : sedantário: fator 1.2; levemente ativo 1.55
+	  // muito ativo: 1.725; extremantente ativo 1.90;
+	 // variableForGender * nivel
+	  Double bmr = getBMR(id);
+	  HealthProfile p = findById(id);
+	  Double activityFactor;
+	  Double frequency = p.getWorkoutFrequency();
+	  
+	  if(frequency == 0) {
+		  activityFactor = 1.2;
+	  }else if (frequency <= 2) {
+		  activityFactor = 1.55;
+	  }else if (frequency <= 4) {
+		  activityFactor = 1.725;
+	  }else {
+		  activityFactor = 1.90;
+	  }
+	  
+	  return bmr * activityFactor;
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	
+	  
+  }
+  
+  
     
+  
+  
+  
   
 	// atrofia
 	public Boolean hasAtrofiaInjury() {
