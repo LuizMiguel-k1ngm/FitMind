@@ -2,6 +2,8 @@ package com.fitmind.entity;
 
 import java.util.Objects;
 
+import com.fitmind.entity.enums.ProfileType;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,7 @@ public class HealthProfile {
 	
 	private Double weight;
 	private Double height;
+	private ProfileType health;
 	private Double exercise;
 	private Integer goal;
 	private Double workingStanding;
@@ -37,7 +40,7 @@ public class HealthProfile {
 	}
 	
 
-	public HealthProfile(Long id, Long userId, Double weight, Double height, Double exercise,
+	public HealthProfile(Long id, Long userId, Double weight, Double height, ProfileType health, Double exercise,
 			Integer goal, Double workingStanding, Double workoutFrequency, Integer heartIssue,
 			Integer jointIssue, Integer bonesIssue, Integer breathIssue,
 			Integer drink, Integer smoke) {
@@ -45,6 +48,7 @@ public class HealthProfile {
 		this.userId = userId;
 		this.weight = weight;
 		this.height = height;
+		this.health = health; 
 		this.goal = goal;
 		this.exercise = exercise;
 		this.workingStanding = workingStanding;
@@ -55,6 +59,16 @@ public class HealthProfile {
 		this.breathIssue = breathIssue;
 		this.drink = drink;
 		this.smoke = smoke;
+	}
+
+
+	public ProfileType getHealth() {
+		return health;
+	}
+
+
+	public void setHealth(ProfileType health) {
+		this.health = health;
 	}
 
 
