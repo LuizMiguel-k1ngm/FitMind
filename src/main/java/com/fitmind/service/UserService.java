@@ -3,6 +3,7 @@ package com.fitmind.service;
 
 import org.springframework.stereotype.Service;
 
+import com.fitmind.entity.HealthProfile;
 import com.fitmind.entity.User;
 import com.fitmind.repository.HealthProfileRepository;
 import com.fitmind.repository.UserRepository;
@@ -25,20 +26,20 @@ public class UserService {
 	}
 	
 	public User add (User u){
-	return userRepository.save(u);
+		return userRepository.save(u);
 	
 		
 	}
 	
-	public void delete(Long id) {
+	public void delete(Long userId) {
 		
-		Long profileId = profileService.findUserById(id);
+		HealthProfile p = profileService.getHealthpProfileFromUserId(userId);
 		
 		// DELETAR PROFILE
-		profileRepository.deleteById(id);
+		profileRepository.deleteById(p.getId());
 		
 		// DELETAR USER
-		userRepository.deleteById(id);
+		userRepository.deleteById(p.getId());
 		
 	}
 	

@@ -10,9 +10,7 @@ import com.fitmind.entity.Workout;
 public interface WorkoutRepository extends JpaRepository<Workout, Long> {
 	
 	
-	
-	
-	
+		
 	
 	
 	

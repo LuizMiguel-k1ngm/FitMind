@@ -1,5 +1,7 @@
 package com.fitmind.resource;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fitmind.entity.Activity;
 import com.fitmind.entity.HealthProfile;
 import com.fitmind.entity.dto.Information;
 import com.fitmind.repository.HealthProfileRepository;
@@ -18,17 +21,16 @@ import com.fitmind.service.HealthProfileService;
 @RequestMapping(value = "/api/v1/profiles")
 public class HealthProfileResource {
 
-    private final HealthProfileRepository healthProfileRepository;
 	private HealthProfileService servico;
 	
-	public HealthProfileResource(HealthProfileService servico, HealthProfileRepository healthProfileRepository) {
+	public HealthProfileResource(HealthProfileService servico) {
 		this.servico = servico;
-		this.healthProfileRepository = healthProfileRepository;	
+
 	}
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<HealthProfile> findbyId(@PathVariable Long id){
-		HealthProfile p  = servico.findById(id);
+	@GetMapping(value = "/{userId}")
+	public ResponseEntity<HealthProfile> findbyId(@PathVariable Long userId){
+		HealthProfile p  = servico.getHealthpProfileFromUserId(userId);
 		return ResponseEntity.ok().body(p);
 		
 		
@@ -42,31 +44,40 @@ public class HealthProfileResource {
 		
 	}
 	
-	@GetMapping(value = "/{id}/bmi")
-	public ResponseEntity<Double> getBMI(@PathVariable Long id){
-		
-		Double bmi = servico.getBMI(id);
-
+	@GetMapping(value = "/{userId}/bmi")
+	public ResponseEntity<Double> getBMI(@PathVariable Long userId){
+		Double bmi = servico.getBMI(userId);
 		return ResponseEntity.ok().body(bmi);
 	}
 	
 	
-	@GetMapping(value = "/{id}/information")
-	public ResponseEntity<Information> getInformation(@PathVariable Long id){
+	@GetMapping(value = "/{userId}/information")
+	public ResponseEntity<Information> getInformation(@PathVariable Long userId){
 		
-		Double caloricGoal = servico.getCaloricGoal(id);
-		Double totalCaloricExpenditure = servico.getTotalCaloricExpenditure(id);
-		Double getBMR = servico.getBMR(id);
-		Double getBMI = servico.getBMI(id);
-		Boolean hasMuscularInjury = servico.gethasMuscularInjury(id);
-		Boolean hasAtrofiaInjury = servico.gethasMuscularInjury(id);
-		Boolean userTall = servico.getUserTall(id);
+		Double caloricGoal = servico.getCaloricGoal(userId);
+		Double totalCaloricExpenditure = servico.getTotalCaloricExpenditure(userId);
+		Double getBMR = servico.getBMR(userId);
+		Double getBMI = servico.getBMI(userId);
+		Boolean hasMuscularInjury = servico.gethasMuscularInjury(userId);
+		Boolean hasAtrofiaInjury = servico.gethasMuscularInjury(userId);
+		Boolean userTall = servico.getUserTall(userId);
 		
 		Information i = new Information(caloricGoal, totalCaloricExpenditure, getBMR, getBMI, hasMuscularInjury, hasAtrofiaInjury, userTall);
 		
 		return ResponseEntity.ok().body(i);
 		
 	}
+	
+	@GetMapping(value = "/{userId}/workouts/{day}")
+	public ResponseEntity<Activity> getWorkout(@PathVariable Long userId, @PathVariable Integer day){
+		Activity a = servico.workoutRecomendation(userId, day);
+		return ResponseEntity.ok().body(a);
+		
+	}
+
+	
+	
+	
 	
 	
 	

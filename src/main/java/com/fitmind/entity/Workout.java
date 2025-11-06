@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fitmind.entity.enums.ProfileType;
 
 import jakarta.persistence.CascadeType;
@@ -29,6 +30,7 @@ public class Workout {
 	private ProfileType target;
 	
 	@OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
 	private List<Activity> workout = new ArrayList<>();
 	
 	

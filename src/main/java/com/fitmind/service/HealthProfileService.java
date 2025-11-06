@@ -1,47 +1,61 @@
 package com.fitmind.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.fitmind.entity.Activity;
 import com.fitmind.entity.HealthProfile;
 import com.fitmind.entity.User;
+import com.fitmind.entity.Workout;
 import com.fitmind.entity.enums.ProfileType;
 import com.fitmind.repository.HealthProfileRepository;
 import com.fitmind.repository.UserRepository;
+import com.fitmind.repository.WorkoutRepository;
 
 @Service
 public class HealthProfileService {
 
 	private static final Double CALORIE_TRESHOLD = 500.;
 	private static final Integer ELDERLY_TRESHOLD = 65;
+	
 
 	private HealthProfileRepository profileRepository;
 	private UserRepository userRepository;
+	private WorkoutRepository workoutRepository;
 
-	public HealthProfileService(HealthProfileRepository profileRepository, UserRepository userRepository) {
+	
+
+	public HealthProfileService(HealthProfileRepository profileRepository, UserRepository userRepository,
+			WorkoutRepository workoutRepository) {
 		this.profileRepository = profileRepository;
 		this.userRepository = userRepository;
+		this.workoutRepository = workoutRepository;
+	}
+	
+	public List<Workout> loadWorkouts(){
+		return workoutRepository.findAll();		
+	}
+	
+	public HealthProfile getHealthpProfileFromUserId(Long userId) {
+		return profileRepository.findByUserId(userId);
 	}
 
+
+	
 	public HealthProfile add(HealthProfile u) {
 		return profileRepository.save(u);
 	}
 
-	public HealthProfile findById(Long id) {
-		return profileRepository.findById(id).get();
-	}
 
-	public Long findUserById(Long id) {
 
-		HealthProfile p = profileRepository.findByUserId(id);
-
-		return p.getUserId();
-
-	}
+	
 
 	// Lesao muscular
-	public Boolean gethasMuscularInjury(Long id) {
+	public Boolean gethasMuscularInjury(Long userId) {
 
-		HealthProfile p = findById(id);
+		HealthProfile p = getHealthpProfileFromUserId(userId);
 
 		if (p.getJointIssue() == 1 && p.getWorkoutFrequency() >= 3 && p.getWorkingStanding() == 1
 				&& p.getSmoke() == 1) {
@@ -53,21 +67,17 @@ public class HealthProfileService {
 
 	// BMI
 
-	public Double getBMI(Long id) {
-
-		// bmi = weight / height* height
-		HealthProfile p = findById(id);
+	public Double getBMI(Long userId) {
+		HealthProfile p = getHealthpProfileFromUserId(userId);
 		Double squareHeight = p.getHeight() * p.getHeight();
-
 		Double bmi = p.getWeight() / squareHeight;
 		return bmi;
 	}
 
 	// BMR - basal metabolic rate
 
-	public Double getBMR(Long id) {
-		HealthProfile p = findById(id);
-		Long userId = findUserById(id);
+	public Double getBMR(Long userId) {
+		HealthProfile p = getHealthpProfileFromUserId(userId);
 		User u = userRepository.findById(userId).get();
 		Integer gender = u.getGender();
 		Double weightToCm = p.getHeight() * 100;
@@ -78,12 +88,12 @@ public class HealthProfileService {
 
 	}
 
-	public Double getTotalCaloricExpenditure(Long id) {
+	public Double getTotalCaloricExpenditure(Long userId) {
 		// niveis : sedantário: fator 1.2; levemente ativo 1.55
 		// muito ativo: 1.725; extremantente ativo 1.90;
 		// variableForGender * nivel
-		Double bmr = getBMR(id);
-		HealthProfile p = findById(id);
+		Double bmr = getBMR(userId);
+		HealthProfile p = getHealthpProfileFromUserId(userId);
 		Double activityFactor;
 		Double frequency = p.getWorkoutFrequency();
 
@@ -103,13 +113,13 @@ public class HealthProfileService {
 
 	// caloric goal
 
-	public Double getCaloricGoal(Long id) {
+	public Double getCaloricGoal(Long userId) {
 		// - manter = tce
 		// - perder = tce - 500
 		// - ganhar massa = tce + 500
 
-		HealthProfile p = findById(id);
-		Double tce = getTotalCaloricExpenditure(id);
+		HealthProfile p = getHealthpProfileFromUserId(userId);
+		Double tce = getTotalCaloricExpenditure(userId);
 		Integer goal = p.getGoal();
 
 		switch (goal) {
@@ -127,18 +137,10 @@ public class HealthProfileService {
 
 	}
 
-	// atrofia
-	public Boolean gatHasAtrofiaInjury() {
+	
+	public Boolean fatUser(Long userId) {
 
-		// O que tem que ser True do perfil, para ser AtrofiaInjury
-
-		return true;
-	}
-
-	public Boolean fatUser(Long id) {
-
-		HealthProfile p = findById(id);
-		
+		HealthProfile p = getHealthpProfileFromUserId(userId);
 
 		Integer FAT_LIMIT = 100;
 
@@ -148,9 +150,9 @@ public class HealthProfileService {
 		return false;
 	}
 
-	public Boolean getUserTall(Long id) {
+	public Boolean getUserTall(Long userId) {
 
-		HealthProfile p = findById(id);
+		HealthProfile p = getHealthpProfileFromUserId(userId);
 
 		if (p.getHeight() > 190) {
 			return true;
@@ -158,41 +160,61 @@ public class HealthProfileService {
 		return false;
 	}
 
-	
-	public void classifyPerson(Long id){
-		HealthProfile p = findById(id);
-		Long userId = findUserById(id);
-		User u = userRepository.findById(userId).get();
-		ProfileType pType;
-	
-		//verificação de genero e doenças
+	public ProfileType classifyPerson(Long userId) {
 		
-			//doenças
-		if (p.getBonesIssue() == 0 && p.getBreathIssue() == 0 
-				&& p.getHeartIssue() == 0
-				&& p.getJointIssue() == 0) {
-			//genero = homem
-			
+		HealthProfile p = getHealthpProfileFromUserId(userId);
+		
+		User u = userRepository.findById(userId).get();
+		
+		ProfileType pType = null;
+
+		// doenças
+		if (p.getBonesIssue() == 0 && p.getBreathIssue() == 0 && p.getHeartIssue() == 0 && p.getJointIssue() == 0) {
+			// genero = homem
+
 			pType = u.getGender() == 0 ? ProfileType.HEALTHY_WOMEN : ProfileType.HEALTHY_MAN;
 
-
-		if (u.getAge() > ELDERLY_TRESHOLD) {
-			pType = ProfileType.ELDERLY_PERSON;
-			p.setHealth(pType);
+			if (u.getAge() > ELDERLY_TRESHOLD) {
+				pType = ProfileType.ELDERLY_PERSON;
+				p.setHealth(pType);
+			}
 		}
-		
-		if(p.getBonesIssue() == 1 || p.getJointIssue()==1) {
+
+		if (p.getBonesIssue() == 1 || p.getJointIssue() == 1) {
 			pType = ProfileType.JOINT_ISSUE_PERSON;
 			p.setHealth(pType);
 		}
-		
-		if(p.getBreathIssue() == 1  || p.getHeartIssue() ==1) {
+
+		if (p.getBreathIssue() == 1 || p.getHeartIssue() == 1) {
 			pType = ProfileType.HEART_OR_LUNG_ISSUE_PERSON;
 			p.setHealth(pType);
 		}
+			
+		return pType;
+
+	}
+
+
+	public Activity workoutRecomendation(Long userId, Integer day) {
 		
+		ProfileType pType = classifyPerson(userId);
+		List<Workout> workouts = loadWorkouts();
+
+		
+		Workout t =  workouts.stream().filter(w -> w.getTarget() == pType).findFirst().get();
+			
+		List<Activity> a = t.getWorkout();
+		
+		Activity returningActivity = a.stream().filter(ax -> ax.getworkoutDay() == day).findFirst().get();
+		
+		return returningActivity;
+		
+		
+		
+		
+		
+		
+
 	}
-	
-	}
-	
+
 }
