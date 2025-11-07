@@ -38,10 +38,10 @@ public class UserResource {
 		
 	}
 	
-	@DeleteMapping(value = "/{id}/delete")
-	public ResponseEntity<Void> delete(@PathVariable Long id){
+	@DeleteMapping(value = "/{userId}/delete")
+	public ResponseEntity<Void> delete(@PathVariable Long userId){
 		
-		servico.delete(id);
+		servico.delete(userId);
 		return ResponseEntity.noContent().build();
 	}
 	

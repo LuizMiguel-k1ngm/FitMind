@@ -35,12 +35,11 @@ public class UserService {
 		
 		HealthProfile p = profileService.getHealthpProfileFromUserId(userId);
 		
-		// DELETAR PROFILE
-		profileRepository.deleteById(p.getId());
+		if(p != null) {
+			profileRepository.deleteById(p.getId());
+		}
 		
-		// DELETAR USER
-		userRepository.deleteById(p.getId());
-		
+		userRepository.deleteById(userId);	
 	}
 	
 	public User findById(Long id) {

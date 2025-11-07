@@ -1,5 +1,7 @@
 package com.fitmind.entity;
 
+import com.fitmind.utils.ImageCode;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +18,7 @@ public class Activity {
 	private Long id;
 	private Integer workoutDay;
 	private String details;
+	private String code = ImageCode.generateImageCode(8) ;
 	
 	@ManyToOne
 	@JoinColumn(name = "workout_id")

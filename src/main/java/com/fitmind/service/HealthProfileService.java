@@ -10,6 +10,7 @@ import com.fitmind.entity.HealthProfile;
 import com.fitmind.entity.User;
 import com.fitmind.entity.Workout;
 import com.fitmind.entity.enums.ProfileType;
+import com.fitmind.exceptions.UserAlreadyHasProfile;
 import com.fitmind.repository.HealthProfileRepository;
 import com.fitmind.repository.UserRepository;
 import com.fitmind.repository.WorkoutRepository;
@@ -42,10 +43,24 @@ public class HealthProfileService {
 		return profileRepository.findByUserId(userId);
 	}
 
+	
+	public List<HealthProfile>  getAllProfiles(){
+		return profileRepository.findAll();
+		
+	}
+	
+	
 
 	
-	public HealthProfile add(HealthProfile u) {
-		return profileRepository.save(u);
+	public HealthProfile add(HealthProfile p) {
+		Long userId = p.getUserId();
+		List<HealthProfile> profiles  = getAllProfiles();
+		List<Long> userIds = profiles.stream().map(px -> px.getUserId()).toList();
+		
+		if(userIds.contains(userId)) {
+			throw new UserAlreadyHasProfile("User already exist") ; 
+		}
+		return profileRepository.save(p);
 	}
 
 
