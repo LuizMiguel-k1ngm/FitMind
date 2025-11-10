@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:16
+    container_name: fitmind_db
+    environment:
+      POSTGRES_DB: fitmind
+      POSTGRES_USER: fituser
+      POSTGRES_PASSWORD: fitpass
+    ports:
+      - "5432:5432"
+    networks:
+      - fitmind-net
+
+  app:
+    build: .
+    container_name: fitmind_app
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/fitmind
+      SPRING_DATASOURCE_USERNAME: fituser
+      SPRING_DATASOURCE_PASSWORD: fitpass
+    ports:
+      - "8080:8080"
+    networks:
+      - fitmind-net
+
+networks:
+  fitmind-net:
